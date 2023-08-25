@@ -1,73 +1,71 @@
-package com.application.examappjava.Controller;
+package com.application.examappjava.controller;
 
-import com.application.examappjava.Dto.DomainDto;
-import com.application.examappjava.Entity.Domain;
-import com.application.examappjava.Service.DomainService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.application.examappjava.dto.DomainDto;
+import com.application.examappjava.service.DomainService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
 @RequestMapping("/domain")
 public class DomainController {
-    @Autowired
-    DomainDto domainDto;
+
     private final DomainService domainService;
 
     public DomainController(DomainService domainService) {
+
         this.domainService = domainService;
     }
 
     @PostMapping
-    public ResponseEntity<String> AddDomain(@RequestBody DomainDto domain) {
+    public ResponseEntity<Void> addDomain(@RequestBody final DomainDto domain) {
         domainService.addDomain(domain);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<DomainDto> getPostById(@PathVariable Long id) {
-        Domain domain = domainService.getDomainById(id);
-        if (domain != null) {
-            return new ResponseEntity<>(domainDto, HttpStatus.OK);
+    public ResponseEntity<DomainDto> getDomainByID(@PathVariable final Long id) {
+        DomainDto domainDto = domainService.getDomainByID(id);
+        if (domainDto != null) {
+            return ResponseEntity.ok(domainDto);
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return ResponseEntity.notFound().build();
         }
     }
 
     @GetMapping("/list")
-    public ResponseEntity<List<DomainDto>> getAlldomains() {
-        List<DomainDto> posts = domainService.getAllDomain();
-        return new ResponseEntity<>(posts, HttpStatus.OK);
+    public ResponseEntity<List<DomainDto>> getAllDomains() {
+        List<DomainDto> domains = domainService.getAllDomains();
+        return new ResponseEntity<>(domains, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletedomainById(@PathVariable Long id) {
-        boolean deleted = domainService.deletedomainById(id);
+    public ResponseEntity<String> deleteDomainByID(@PathVariable final Long id) {
+        boolean deleted = domainService.deleteDomainByID(id);
         if (deleted) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return ResponseEntity.noContent().build();
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return ResponseEntity.notFound().build();
         }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> updateDomain(@PathVariable Long id, @RequestBody DomainDto updatedDomain) {
-        Domain existingDomain = domainService.getDomainById(id);
-        if (existingDomain == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public ResponseEntity<Void> updateDomain(@PathVariable final Long id, @RequestBody final DomainDto updatedDomain) {
+        boolean isSuccess = domainService.updateDomain(id, updatedDomain);
+
+        if (isSuccess) {
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
         }
-
-        existingDomain.setName(updatedDomain.getName());
-        existingDomain.setDescription(updatedDomain.getDescription());
-        existingDomain.setModifiedBy(updatedDomain.getModifiedBy());
-
-        domainService.updateDomain(id, updatedDomain.dissamble());
-
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    }
-
+}

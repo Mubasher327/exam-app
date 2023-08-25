@@ -1,13 +1,11 @@
-package com.application.examappjava.Dto;
+package com.application.examappjava.dto;
 
-import com.application.examappjava.Entity.Education;
+import com.application.examappjava.entity.Education;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
 public class EducationDto {
 
     private long id;
@@ -17,28 +15,21 @@ public class EducationDto {
     private double cgpa;
     private String startDate;
     private String endDate;
+    private CandidateDto candidateDto;
 
     public EducationDto(Education education){
-        this.setId(education.getId());
-        this.setUniversityName(education.getUniversityName());
-        this.setCampus(education.getCampus());
-        this.setDegree(education.getDegree());
-        this.setCgpa(education.getCgpa());
-        this.setStartDate(education.getStartDate());
-        this.setEndDate(education.getEndDate());
+        this.id=education.getId();
+        this.universityName=education.getUniversityName();
+        this.campus=education.getCampus();
+        this.degree=education.getDegree();
+        this.cgpa=education.getCgpa();
+        this.startDate=education.getStartDate();
+        this.endDate= education.getEndDate();
+        this.candidateDto=new CandidateDto(education.getCandidate());
     }
 
-    public Education dissamble(){
-        Education education=new Education();
+ public EducationDto(){
 
-        education.setId(id);
-        education.setUniversityName(universityName);
-        education.setCampus(campus);
-        education.setDegree(degree);
-        education.setCgpa(cgpa);
-        education.setStartDate(startDate);
-        education.setEndDate(endDate);
-        return education;
-    }
+ }
 
 }

@@ -1,16 +1,13 @@
-package com.application.examappjava.Dto;
+package com.application.examappjava.dto;
 
-import com.application.examappjava.Entity.Candidate;
-import jakarta.persistence.Column;
+import com.application.examappjava.entity.Candidate;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Data
 @Component
 @AllArgsConstructor
-@NoArgsConstructor
 public class CandidateDto {
     private long id;
     private String firstName;
@@ -21,25 +18,17 @@ public class CandidateDto {
     private String currentAddress;
 
     public CandidateDto(Candidate candidate){
-        this.setId(candidate.getId());
-        this.setFirstName(candidate.getFirstName());
-        this.setLastName(candidate.getLastName());
-        this.setPhoneNo(candidate.getPhoneNo());
-        this.setCnic(candidate.getCnic());
-        this.setPermanentAddress(candidate.getPermanentAddress());
-        this.setCurrentAddress(candidate.getCurrentAddress());
+        this.id=candidate.getId();
+        this.firstName=candidate.getFirstName();
+        this.lastName=candidate.getLastName();
+        this.phoneNo=candidate.getPhoneNo();
+        this.cnic= candidate.getCnic();
+        this.permanentAddress=candidate.getPermanentAddress();
+        this.currentAddress=candidate.getCurrentAddress();
     }
-    public Candidate dissamble(){
-        Candidate candidate=new Candidate();
-        candidate.setId(id);
-        candidate.setFirstName(firstName);
-        candidate.setLastName(lastName);
-        candidate.setPhoneNo(phoneNo);
-        candidate.setCnic(cnic);
-        candidate.setPermanentAddress(permanentAddress);
-        candidate.setCurrentAddress(currentAddress);
-        return candidate;
+    public CandidateDto(){
 
     }
+
 
 }

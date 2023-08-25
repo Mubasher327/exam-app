@@ -1,42 +1,29 @@
-package com.application.examappjava.Dto;
+package com.application.examappjava.dto;
 
-import com.application.examappjava.Entity.Experience;
-import lombok.AllArgsConstructor;
+import com.application.examappjava.entity.Experience;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-
-import java.util.Date;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
+
 public class ExperienceDto {
     private long id;
     private String companyName;
     private String role;
-    private Date startYear;
-    private Date endYear;
+    private String startYear;
+    private String endYear;
     private long expectedSalary;
+    private long currentSalary;
 
     public ExperienceDto(Experience experience){
-        this.setId(experience.getId());
-        this.setCompanyName(experience.getCompanyName());
-        this.setRole(experience.getRole());
-        this.setStartYear(experience.getStartYear());
-        this.setEndYear(experience.getEndYear());
-        this.setExpectedSalary(experience.getExpectedSalary());
+        this.id=experience.getId();
+        this.companyName=experience.getCompanyName();
+        this.role=experience.getRole();
+        this.startYear=experience.getStartYear();
+        this.endYear=experience.getEndYear();
+        this.expectedSalary=experience.getExpectedSalary();
+        this.currentSalary=experience.getCurrentSalary();
     }
-
-    public Experience dissamble(){
-        Experience experience=new Experience();
-
-        experience.setId(id);
-        experience.setCompanyName(companyName);
-        experience.setRole(role);
-        experience.setStartYear(startYear);
-        experience.setEndYear(endYear);
-        experience.setExpectedSalary(expectedSalary);
-        return experience;
-    }
+public ExperienceDto(){
+}
 
 }
