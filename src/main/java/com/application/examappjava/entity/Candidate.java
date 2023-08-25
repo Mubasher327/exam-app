@@ -9,10 +9,14 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Column;
 import jakarta.persistence.OneToMany;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.List;
+
 
 @Entity
 @Data
+@NoArgsConstructor
 
 @Table(name="candidateInfo")
 public class Candidate {
@@ -45,9 +49,6 @@ public class Candidate {
     @OneToMany(mappedBy = "candidate")
     private List<Experience> experiences;
 
-    public Candidate(){
-
-    }
     public Candidate(CandidateDto candidateDto){
         this.firstName= candidateDto.getFirstName();
         this.lastName= candidateDto.getLastName();

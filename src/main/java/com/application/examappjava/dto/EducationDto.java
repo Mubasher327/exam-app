@@ -3,9 +3,11 @@ package com.application.examappjava.dto;
 import com.application.examappjava.entity.Education;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class EducationDto {
 
     private long id;
@@ -28,8 +30,6 @@ public class EducationDto {
         this.candidateDto=new CandidateDto(education.getCandidate());
     }
 
- public EducationDto(){
 
- }
 
 }

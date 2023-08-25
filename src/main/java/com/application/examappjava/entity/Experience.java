@@ -10,9 +10,11 @@ import jakarta.persistence.Column;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.JoinColumn;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@NoArgsConstructor
 @Table(name="experience")
 
 public class Experience {
@@ -24,14 +26,19 @@ public class Experience {
 
     @Column(name="company_name")
     private String companyName;
+
     @Column(name="role")
     private String role;
+
     @Column(name="start_year")
     private String startYear;
+
     @Column(name="end_year")
     private String endYear;
+
     @Column(name="expected_salary")
     private long expectedSalary;
+
     @Column(name="current_salary")
     private long currentSalary;
 
@@ -39,9 +46,6 @@ public class Experience {
     @JoinColumn(name="CandidateId")
     private Candidate candidate;
 
-    public Experience(){
-
-    }
 
     public Experience(ExperienceDto experienceDto){
         this.companyName=experienceDto.getCompanyName();

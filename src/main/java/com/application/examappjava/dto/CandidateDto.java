@@ -3,11 +3,14 @@ package com.application.examappjava.dto;
 import com.application.examappjava.entity.Candidate;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Data
 @Component
 @AllArgsConstructor
+@NoArgsConstructor
+
 public class CandidateDto {
     private long id;
     private String firstName;
@@ -26,9 +29,7 @@ public class CandidateDto {
         this.permanentAddress=candidate.getPermanentAddress();
         this.currentAddress=candidate.getCurrentAddress();
     }
-    public CandidateDto(){
 
-    }
 
 
 }

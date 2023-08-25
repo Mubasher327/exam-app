@@ -3,10 +3,12 @@ package com.application.examappjava.dto;
 import com.application.examappjava.entity.Domain;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
 @AllArgsConstructor
+@NoArgsConstructor
 @Data
 
 public class DomainDto {
@@ -15,9 +17,7 @@ public class DomainDto {
     private String description;
     private int createdBy;
     private int modifiedBy;
-    public DomainDto(){
 
-    }
     public DomainDto(Domain domain) {
         this.id=domain.getId();
         this.name = domain.getName();
@@ -25,5 +25,5 @@ public class DomainDto {
         this.createdBy = domain.getCreatedBy();
         this.modifiedBy = domain.getModifiedBy();
     }
-    // abc
+
 }

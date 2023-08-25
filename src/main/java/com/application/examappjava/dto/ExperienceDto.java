@@ -1,9 +1,13 @@
 package com.application.examappjava.dto;
 
 import com.application.examappjava.entity.Experience;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 
 public class ExperienceDto {
     private long id;
@@ -23,7 +27,6 @@ public class ExperienceDto {
         this.expectedSalary=experience.getExpectedSalary();
         this.currentSalary=experience.getCurrentSalary();
     }
-public ExperienceDto(){
-}
+
 
 }

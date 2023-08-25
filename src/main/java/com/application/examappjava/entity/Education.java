@@ -10,9 +10,11 @@ import jakarta.persistence.Column;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.JoinColumn;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@NoArgsConstructor
 
 @Table(name="educationDetail")
 public class Education {
@@ -46,9 +48,6 @@ public class Education {
     @JoinColumn(name = "CandidateId")
     private Candidate candidate;
 
-    public Education(){
-
-    }
 
     public Education(EducationDto educationDto){
         this.universityName=educationDto.getUniversityName();
