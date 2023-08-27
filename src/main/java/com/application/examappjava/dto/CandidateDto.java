@@ -1,10 +1,15 @@
 package com.application.examappjava.dto;
 
 import com.application.examappjava.entity.Candidate;
+import com.application.examappjava.entity.Education;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 @Component
@@ -19,17 +24,24 @@ public class CandidateDto {
     private String cnic;
     private String permanentAddress;
     private String currentAddress;
+    private List<ExperienceDto> experiences;
+    private List<EducationDto> educations;
 
-    public CandidateDto(Candidate candidate){
-        this.id=candidate.getId();
-        this.firstName=candidate.getFirstName();
-        this.lastName=candidate.getLastName();
-        this.phoneNo=candidate.getPhoneNo();
-        this.cnic= candidate.getCnic();
-        this.permanentAddress=candidate.getPermanentAddress();
-        this.currentAddress=candidate.getCurrentAddress();
+
+    public CandidateDto(Candidate candidate) {
+        this.setId(candidate.getId());
+        this.setFirstName(candidate.getFirstName());
+        this.setLastName(candidate.getLastName());
+        this.setPhoneNo(candidate.getPhoneNo());
+        this.setCnic(candidate.getCnic());
+        this.setPermanentAddress(candidate.getPermanentAddress());
+        this.setCurrentAddress(candidate.getCurrentAddress());
+        this.setEducations(candidate.getEducations().stream()
+                .map(EducationDto::new)
+                .collect(Collectors.toList()));
+        this.setExperiences(candidate.getExperiences().stream()
+                .map(ExperienceDto::new)
+                .collect(Collectors.toList()));
+
     }
-
-
-
 }

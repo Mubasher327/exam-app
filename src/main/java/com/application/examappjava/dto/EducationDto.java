@@ -17,17 +17,27 @@ public class EducationDto {
     private double cgpa;
     private String startDate;
     private String endDate;
-    private CandidateDto candidateDto;
 
     public EducationDto(Education education){
-        this.id=education.getId();
-        this.universityName=education.getUniversityName();
-        this.campus=education.getCampus();
-        this.degree=education.getDegree();
-        this.cgpa=education.getCgpa();
-        this.startDate=education.getStartDate();
-        this.endDate= education.getEndDate();
-        this.candidateDto=new CandidateDto(education.getCandidate());
+        this.setId(education.getId());
+        this.setUniversityName(education.getUniversityName());
+        this.setCampus(education.getCampus());
+        this.setDegree(education.getDegree());
+        this.setCgpa(education.getCgpa());
+        this.setStartDate(education.getStartDate());
+        this.setEndDate(education.getEndDate());
+    }
+
+    public Education toEntity(){
+        Education education=new Education();
+        education.setId(id);
+        education.setUniversityName(universityName);
+        education.setCampus(campus);
+        education.setDegree(degree);
+        education.setCgpa(cgpa);
+        education.setStartDate(startDate);
+        education.setEndDate(endDate);
+        return education;
     }
 
 

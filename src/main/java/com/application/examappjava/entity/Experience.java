@@ -1,14 +1,7 @@
 package com.application.examappjava.entity;
 
 import com.application.examappjava.dto.ExperienceDto;
-import jakarta.persistence.Table;
-import jakarta.persistence.Id;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Column;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.JoinColumn;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -42,28 +35,32 @@ public class Experience {
     @Column(name="current_salary")
     private long currentSalary;
 
-    @ManyToOne
-    @JoinColumn(name="CandidateId")
+    @Column(name="deleted")
+    private boolean deleted=false;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "candidate_id")
     private Candidate candidate;
 
 
-    public Experience(ExperienceDto experienceDto){
+    public Experience(ExperienceDto experienceDto, Candidate candidate){
         this.companyName=experienceDto.getCompanyName();
         this.role=experienceDto.getRole();
         this.startYear=experienceDto.getStartYear();
         this.endYear=experienceDto.getEndYear();
         this.expectedSalary=experienceDto.getExpectedSalary();
         this.currentSalary=experienceDto.getCurrentSalary();
+        this.candidate=candidate;
     }
 
-    public void updateFromDto(ExperienceDto experienceDto){
-        this.companyName=experienceDto.getCompanyName();
-        this.role=experienceDto.getRole();
-        this.startYear=experienceDto.getStartYear();
-        this.endYear=experienceDto.getEndYear();
-        this.expectedSalary=experienceDto.getExpectedSalary();
-        this.currentSalary=experienceDto.getCurrentSalary();
-
-    }
+//    public void updateFromDto(ExperienceDto experienceDto){
+//        this.companyName=experienceDto.getCompanyName();
+//        this.role=experienceDto.getRole();
+//        this.startYear=experienceDto.getStartYear();
+//        this.endYear=experienceDto.getEndYear();
+//        this.expectedSalary=experienceDto.getExpectedSalary();
+//        this.currentSalary=experienceDto.getCurrentSalary();
+//
+//    }
 
 }

@@ -1,18 +1,11 @@
 package com.application.examappjava.entity;
 
 import com.application.examappjava.dto.CandidateDto;
-import jakarta.persistence.Table;
-import jakarta.persistence.Id;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Column;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
+import java.util.ArrayList;
 import java.util.List;
-
 
 @Entity
 @Data
@@ -43,11 +36,14 @@ public class Candidate {
     @Column(name="current_address")
     private String currentAddress;
 
-    @OneToMany(mappedBy = "candidate")
-    private List<Education> educations;
+    @Column(name="deleted")
+    private boolean deleted=false;
 
-    @OneToMany(mappedBy = "candidate")
-    private List<Experience> experiences;
+    @OneToMany(mappedBy = "candidate", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private List<Education> educations = new ArrayList<>();
+
+    @OneToMany(mappedBy = "candidate", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private List<Experience> experiences =new ArrayList<>();
 
     public Candidate(CandidateDto candidateDto){
         this.firstName= candidateDto.getFirstName();
@@ -56,6 +52,16 @@ public class Candidate {
         this.cnic=candidateDto.getCnic();
         this.permanentAddress= candidateDto.getPermanentAddress();
         this.currentAddress= candidateDto.getCurrentAddress();
+    }
+
+    public void addEducation(Education education) {
+        education.setCandidate(this);
+        educations.add(education);
+    }
+
+    public void addExperience(Experience experience) {
+        experience.setCandidate(this);
+        experiences.add(experience);
     }
 
     public void updateFromDto(CandidateDto candidateDto){

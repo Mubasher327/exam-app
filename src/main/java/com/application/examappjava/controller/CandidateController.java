@@ -2,7 +2,6 @@ package com.application.examappjava.controller;
 
 import com.application.examappjava.dto.CandidateDto;
 import com.application.examappjava.service.CandidateService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,15 +27,21 @@ public class CandidateController {
         this.candidateService = candidateService;
     }
 
-    @PostMapping
-    public ResponseEntity<Void> addCandidate(@RequestBody final CandidateDto candidate) {
-        candidateService.addCandidate(candidate);
-        return ResponseEntity.ok().build();
+
+    @PostMapping("/save")
+    public ResponseEntity<CandidateDto> saveCandidate(@RequestBody CandidateDto candidateDto) {
+        CandidateDto savedCandidate = candidateService.saveCandidate(candidateDto);
+
+        if (savedCandidate != null) {
+            return ResponseEntity.ok(savedCandidate);
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CandidateDto> getCandidateByID(@PathVariable final Long id) {
-        CandidateDto candidateDto = candidateService.getCandidateByID(id);
+    public ResponseEntity<CandidateDto> getCandidateAndRelated(@PathVariable Long id) {
+        CandidateDto candidateDto = candidateService.getCandidateAndRelated(id);
         if (candidateDto != null) {
             return ResponseEntity.ok(candidateDto);
         } else {
@@ -45,24 +50,14 @@ public class CandidateController {
     }
 
     @GetMapping("/list")
-    public ResponseEntity<List<CandidateDto>> getAllDomains() {
-        List<CandidateDto> domains = candidateService.getAllCandidates();
-        return new ResponseEntity<>(domains, HttpStatus.OK);
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteCandidateByID(@PathVariable final Long id) {
-        boolean deleted = candidateService.deleteCandidateByID(id);
-        if (deleted) {
-            return ResponseEntity.noContent().build();
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<List<CandidateDto>> getAllCandidates() {
+        List<CandidateDto> candidates = candidateService.getAllCandidates();
+        return ResponseEntity.ok(candidates);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> updateCandidate(@PathVariable final Long id, @RequestBody final CandidateDto updatedCandidate) {
-        boolean isSuccess = candidateService.updateCandidate(id, updatedCandidate);
+    public ResponseEntity<Void> updateCandidate(@PathVariable Long id, @RequestBody CandidateDto updatedCandidateDto) {
+        boolean isSuccess = candidateService.updateCandidate(id, updatedCandidateDto);
 
         if (isSuccess) {
             return ResponseEntity.ok().build();
@@ -71,8 +66,13 @@ public class CandidateController {
         }
     }
 
-
-
-
-
-}
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> softDeleteCandidateAndRelated(@PathVariable Long id) {
+        boolean success = candidateService.softDeleteCandidateAndRelated(id);
+        if (success) {
+            return ResponseEntity.ok("Candidate and related records soft deleted successfully.");
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+    }

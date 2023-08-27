@@ -15,7 +15,6 @@ public class DomainService {
         this.domainRepository = domainRepository;
     }
 
-
     public void addDomain(DomainDto domainDto) {
         Domain domain=new Domain(domainDto);
         domainRepository.save(domain);

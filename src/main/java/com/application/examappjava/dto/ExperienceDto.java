@@ -19,14 +19,24 @@ public class ExperienceDto {
     private long currentSalary;
 
     public ExperienceDto(Experience experience){
-        this.id=experience.getId();
-        this.companyName=experience.getCompanyName();
-        this.role=experience.getRole();
-        this.startYear=experience.getStartYear();
-        this.endYear=experience.getEndYear();
-        this.expectedSalary=experience.getExpectedSalary();
-        this.currentSalary=experience.getCurrentSalary();
+        this.setId(experience.getId());
+        this.setCompanyName(experience.getCompanyName());
+        this.setRole(experience.getRole());
+        this.setStartYear(experience.getStartYear());
+        this.setEndYear(experience.getEndYear());
+        this.setExpectedSalary(experience.getExpectedSalary());
+        this.setCurrentSalary(experience.getCurrentSalary());
     }
-
+    public Experience toEntity(){
+        Experience experience=new Experience();
+        experience.setId(id);
+        experience.setCompanyName(companyName);
+        experience.setRole(role);
+        experience.setStartYear(startYear);
+        experience.setEndYear(endYear);
+        experience.setExpectedSalary(expectedSalary);
+        experience.setCurrentSalary(currentSalary);
+        return experience;
+    }
 
 }

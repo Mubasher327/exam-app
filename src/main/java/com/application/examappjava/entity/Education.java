@@ -1,14 +1,7 @@
 package com.application.examappjava.entity;
 
 import com.application.examappjava.dto.EducationDto;
-import jakarta.persistence.Table;
-import jakarta.persistence.Id;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Column;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.JoinColumn;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -43,29 +36,33 @@ public class Education {
     @Column(name="end_date")
     private String endDate;
 
+    @Column(name="deleted")
+    private boolean deleted=false;
 
-    @ManyToOne
-    @JoinColumn(name = "CandidateId")
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "Candidate_Id")
     private Candidate candidate;
 
 
-    public Education(EducationDto educationDto){
+    public Education(EducationDto educationDto, Candidate candidate){
         this.universityName=educationDto.getUniversityName();
         this.campus=educationDto.getCampus();
         this.degree=educationDto.getDegree();
         this.cgpa= educationDto.getCgpa();
         this.startDate=educationDto.getStartDate();
         this.endDate= educationDto.getEndDate();
+        this.candidate=candidate;
     }
 
-    public void updateFromDto(EducationDto educationDto){
-        this.universityName=educationDto.getUniversityName();
-        this.campus=educationDto.getCampus();
-        this.degree=educationDto.getDegree();
-        this.cgpa= educationDto.getCgpa();
-        this.startDate=educationDto.getStartDate();
-        this.endDate= educationDto.getEndDate();
-
-    }
+//    public void updateFromDto(EducationDto educationDto){
+//        this.universityName=educationDto.getUniversityName();
+//        this.campus=educationDto.getCampus();
+//        this.degree=educationDto.getDegree();
+//        this.cgpa= educationDto.getCgpa();
+//        this.startDate=educationDto.getStartDate();
+//        this.endDate= educationDto.getEndDate();
+//
+//    }
 
 }
